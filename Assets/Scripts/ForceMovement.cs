@@ -4,44 +4,48 @@ using UnityEngine;
 
 public class ForceMovement : MonoBehaviour {
 
-    [SerializeField]
-    string _movementX;
+    public float MotorForce, SteerForce, BrakeForce;
+    public WheelCollider FR_L_Wheel, FR_R_Wheel, RE_L_Wheel, RE_R_Wheel;
 
-    [SerializeField]
-    string _movementZ;
-
-    [SerializeField]
-    float _speed;
-
-    Rigidbody _rigidBody;
-    float _moveX;
-    float _moveZ;
-
-    void Start()
+    private void Start()
     {
-        _rigidBody = this.GetComponent<Rigidbody>();
+        
+    }
 
-        if (_rigidBody == null)
+    private void Update()
+    {
+        float v = Input.GetAxis("Vertical") * MotorForce;
+        float h = Input.GetAxis("Horizontal") * SteerForce;
+
+        RE_R_Wheel.motorTorque = v;
+        RE_L_Wheel.motorTorque = v;
+
+        FR_L_Wheel.steerAngle = h;
+        FR_R_Wheel.steerAngle = h;
+
+        if (Input.GetKey(KeyCode.Space))
         {
-            Debug.LogError("Rigid body could not be found.");
+            RE_L_Wheel.brakeTorque = BrakeForce;
+            RE_R_Wheel.brakeTorque = BrakeForce;
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        _moveX = Input.GetAxis(_movementX);
-        _moveZ = Input.GetAxis(_movementZ);
-    }
-
-    void FixedUpdate()
-    {
-        if (_rigidBody != null)
+        if (Input.GetKeyUp(KeyCode.Space))
         {
-            Vector3 moveVector = new Vector3(_moveX, 0, _moveZ) * _speed;
-            _rigidBody.AddForce(moveVector, ForceMode.Acceleration);
+            RE_L_Wheel.brakeTorque = 0;
+            RE_R_Wheel.brakeTorque = 0;
         }
+
+        if (Input.GetAxis("Vertical") == 0)
+        {
+            RE_L_Wheel.brakeTorque = BrakeForce;
+            RE_R_Wheel.brakeTorque = BrakeForce;
+        }
+        else
+        {
+            RE_L_Wheel.brakeTorque = 0;
+            RE_R_Wheel.brakeTorque = 0;
+        }
+
+
     }
-
-
 }
