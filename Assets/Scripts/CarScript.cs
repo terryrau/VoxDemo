@@ -10,26 +10,32 @@ public class CarScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		OriginalPos = transform.position;
+		//OriginalPos = transform.position;
 		print (OriginalPos);
 	}
 
 	void OnCollisionEnter(Collision collision)
 	{
-        
-		print ("Bang!");
-		transform.position = Vector3.Lerp (transform.position, OriginalPos, 1f);
+        if (collision.gameObject.tag == "Rails")
+        {
+            print ("Bang!");
+            transform.position = OriginalPos;
+            transform.localEulerAngles = new Vector3(0, -90, 0);
+        }
+		
+		
 	}
-	
-	// Update is called once per frame
-	void Update ()
+
+   
+    // Update is called once per frame
+    void Update ()
 	{
 		transform.Translate(Vector3.forward * Time.deltaTime * carSpeed);
 
 
 		if (Input.anyKey)
 		{
-			print ("TAP");
+		
 
 			// Turn right
 			transform.Rotate (new Vector3 ( 0, Time.deltaTime * turnSpeed, 0 ));
