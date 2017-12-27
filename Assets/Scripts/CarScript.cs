@@ -16,6 +16,7 @@ public class CarScript : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision)
 	{
+        
 		print ("Bang!");
 		transform.position = Vector3.Lerp (transform.position, OriginalPos, 1f);
 	}
