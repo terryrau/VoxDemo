@@ -38,7 +38,7 @@ public class CarScript : MonoBehaviour {
 		
 
 			// Turn right
-			transform.Rotate (new Vector3 ( 0, Time.deltaTime * turnSpeed, 0 ));
+			transform.Rotate (new Vector3 ( 0, -Time.deltaTime * turnSpeed, 0 ));
 			// transform.position += transform.right * Time.deltaTime * turnSpeed;
 
 		}
