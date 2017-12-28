@@ -6,10 +6,13 @@ using UnityEngine.UI;
 public class FinishLine : MonoBehaviour {
 
     public Text score;
+    public Sprite[] numbers;
+    public SpriteRenderer number;
     public int counter = 0;
 	// Use this for initialization
 	void Start () {
         score.text = "Score: " + counter;
+        
 	}
 	
 	// Update is called once per frame
@@ -21,6 +24,6 @@ public class FinishLine : MonoBehaviour {
     {
         counter++;
         score.text = "Score: " + counter;
-        
+        number.sprite = numbers[counter];
     }
 }
