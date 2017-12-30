@@ -7,10 +7,9 @@ public class CarScript : MonoBehaviour {
 	public float carSpeed = 30;
 	private float turnSpeed = 150;
 	public Vector3 OriginalPos;
-
-	// Use this for initialization
+// Use this for initialization
 	void Start () {
-		//OriginalPos = transform.position;
+        //OriginalPos = transform.position;
 		print (OriginalPos);
 	}
 

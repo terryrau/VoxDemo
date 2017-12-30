@@ -5,14 +5,19 @@ using UnityEngine.UI;
 
 public class FinishLine : MonoBehaviour {
 
-    public Text score;
+    //public Text score;
     public Sprite[] numbers;
-    public SpriteRenderer number;
-    public int counter = 0;
-	// Use this for initialization
-	void Start () {
-        score.text = "Score: " + counter;
-        
+    public GameObject[] numPos;
+    //public SpriteRenderer number;
+    public int score = 0;
+    public int maxScore = 9999;
+    char[] arrOfNum;
+    public bool recalc;
+
+
+    // Use this for initialization
+    void Start () {
+
 	}
 	
 	// Update is called once per frame
@@ -22,8 +27,40 @@ public class FinishLine : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
-        counter++;
-        score.text = "Score: " + counter;
-        number.sprite = numbers[counter];
+        score++;
+        UpdateScore(score);
+    }
+
+    void UpdateScore(int score)
+    {
+        arrOfNum = score.ToString().ToCharArray();
+
+        if(score > maxScore)
+        {
+            score = maxScore;
+            UpdateScore(score);
+        }else if(score < 0){
+            score = 0;
+            UpdateScore(score);
+        }
+        else
+        {
+            for(int i = 0; i < arrOfNum.Length; i++)
+            {
+                int y = int.Parse(arrOfNum[i].ToString());
+                numPos[i].SetActive(true);
+                numPos[i].GetComponent<SpriteRenderer>().sprite = numbers[y];
+            }
+
+            //check for trailing zeros to hide
+            if(arrOfNum.Length < numPos.Length)
+            {
+                for(int i = arrOfNum.Length; i < numPos.Length; i++)
+                {
+                    numPos[i].SetActive(false);
+                }
+            }
+        }
+
     }
 }
